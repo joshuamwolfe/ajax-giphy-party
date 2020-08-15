@@ -1,24 +1,30 @@
 // giph input value, global variable
 const $searchInput = $('#search-value');
+const $giphLocation = $('#giph-loc');
 
 
 async function searchForGiph(result) {
-  //send search term to giphy
-  const response = await axios.get('https://api.giphy.com/v1/gifs/search', {
-    params: {
-      q: result,
-      api_key: 'gM5z2hEMdK9Z7cVliiXjPieW4gQ9VhNN',
-    }
-  });
+  try {
+    //send search term to giphy
+    const response = await axios.get('https://api.giphy.com/v1/gifs/search', {
+      params: {
+        q: result,
+        api_key: 'gM5z2hEMdK9Z7cVliiXjPieW4gQ9VhNN',
+      }
+    });
 
-  // declare giphy url, create image element, target append location
-  const currentImage = response.data.data[0].images.original.url;
-  const img = document.createElement('img');
-  const giphLoc = document.querySelector('#giph-loc');
+    // declare giphy url, create image element, target append location
+    const currentImage = response.data.data[0].images.original.url;
+    const img = document.createElement('img');
+    const giphLoc = document.querySelector('#giph-loc');
 
-  //append giph to webpage
-  img.setAttribute('src', currentImage);
-  giphLoc.append(img);
+    //append giph to webpage
+    img.setAttribute('src', currentImage);
+    giphLoc.append(img);
+
+  } catch (e) {
+    console.log('Giph Not Found.');
+  }
 }
 
 
@@ -45,4 +51,8 @@ $('form').on('submit', async function(e) {
   $searchInput.val('');
 
   searchForGiph(searchTerm);
+})
+
+$('#remove').on('click', function() {
+  $giphLocation.empty();
 })
