@@ -13,8 +13,11 @@ async function searchForGiph(result) {
       }
     });
 
+    //target giph randomly by generating an id.
+
     // declare giphy url, create image element, target append location
     const currentImage = response.data.data[0].images.original.url;
+    console.log(currentImage.length);
     const img = document.createElement('img');
     const giphLoc = document.querySelector('#giph-loc');
 
